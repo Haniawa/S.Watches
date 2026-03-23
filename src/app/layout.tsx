@@ -12,9 +12,9 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: 'Swatches — Antikviteter & Samlarsaker',
+  title: 'Swatches — Antiques & Collectibles',
   description:
-    'Unika antikviteter, stenar, bärnsten, klockor och smycken. Handplockade objekt från Tradera.',
+    'Unique antiques, stones, amber, watches and jewelry. Hand-picked items from Tradera.',
 };
 
 export default function RootLayout({
@@ -23,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="sv" className={`${inter.variable} ${playfair.variable} h-full`}>
+    <html lang="en" className={`${inter.variable} ${playfair.variable} h-full`}>
       <body className="min-h-full flex flex-col bg-[#FAFAF7] text-stone-900">
         <Header />
         <main className="flex-1">{children}</main>

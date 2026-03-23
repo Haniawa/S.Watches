@@ -16,32 +16,43 @@ export default async function HomePage() {
   return (
     <div>
       {/* ── Hero ──────────────────────────────────────────────────────────── */}
-      <section className="relative bg-gradient-to-br from-stone-900 via-stone-800 to-amber-950 text-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-24 text-center">
+      <section className="relative bg-gradient-to-br from-stone-900 via-stone-800 to-amber-950 text-white overflow-hidden">
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 opacity-20 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: "url('https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=2080&auto=format&fit=crop')",
+          }}
+        />
+        {/* Overlay gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-stone-900/90 via-stone-800/85 to-amber-950/90" />
+        
+        {/* Content */}
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 py-24 text-center">
           <p className="text-amber-400 text-sm font-semibold uppercase tracking-[0.2em] mb-5">
-            Handplockade antikviteter
+            Hand-picked antiques
           </p>
           <h1 className="font-display text-5xl md:text-6xl font-bold leading-tight mb-6">
-            Tidlösa skatter
+            Timeless treasures
             <br />
-            <span className="text-amber-400">från Tradera</span>
+            <span className="text-amber-400">from Tradera</span>
           </h1>
           <p className="text-stone-300 text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
-            Unika stenar, bärnsten, antika klockor och samlarsaker. Varje objekt är
-            noggrant utvalt för sin historia och skönhet.
+            Unique stones, amber, antique watches and collectibles. Each item is
+            carefully selected for its history and beauty.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <Link
               href="/available"
               className="bg-amber-500 hover:bg-amber-400 text-stone-900 font-semibold px-8 py-3.5 rounded-xl transition-colors shadow-lg"
             >
-              Se tillgängliga objekt
+              Browse available items
             </Link>
             <Link
               href="/stones"
               className="border border-stone-500 hover:border-amber-400 hover:text-amber-400 text-stone-300 font-semibold px-8 py-3.5 rounded-xl transition-colors"
             >
-              Utforska bärnsten
+              Explore amber
             </Link>
           </div>
         </div>
@@ -52,10 +63,10 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
           <dl className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             {[
-              { value: availableCount, label: 'Tillgängliga', color: 'text-emerald-400' },
-              { value: soldCount, label: 'Sålda', color: 'text-stone-400' },
-              { value: stonesCount, label: 'Stenar', color: 'text-amber-400' },
-              { value: watchesCount, label: 'Klockor', color: 'text-stone-300' },
+              { value: availableCount, label: 'Available', color: 'text-emerald-400' },
+              { value: soldCount, label: 'Sold', color: 'text-stone-400' },
+              { value: stonesCount, label: 'Stones', color: 'text-amber-400' },
+              { value: watchesCount, label: 'Watches', color: 'text-stone-300' },
             ].map((stat) => (
               <div key={stat.label}>
                 <dd className={`text-3xl font-bold ${stat.color}`}>{stat.value}</dd>
@@ -71,14 +82,14 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto">
           <div className="mb-10">
             <h2 className="font-display text-3xl md:text-4xl font-bold text-stone-800 mb-2">
-              Kategorier
+              Categories
             </h2>
-            <p className="text-stone-500">Utforska vår samling efter kategori</p>
+            <p className="text-stone-500">Explore our collection by category</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <CategoryCard
-              title="Tillgängligt"
-              description="Objekt till salu just nu"
+              title="Available"
+              description="Items for sale right now"
               href="/available"
               count={availableCount}
               gradient="bg-gradient-to-br from-emerald-700 to-emerald-900"
@@ -89,8 +100,8 @@ export default async function HomePage() {
               }
             />
             <CategoryCard
-              title="Sålda"
-              description="Tidigare sålda objekt"
+              title="Sold"
+              description="Previously sold items"
               href="/sold"
               count={soldCount}
               gradient="bg-gradient-to-br from-slate-600 to-slate-800"
@@ -101,8 +112,8 @@ export default async function HomePage() {
               }
             />
             <CategoryCard
-              title="Stenar & Bärnsten"
-              description="Naturliga stenar & ädelstenar"
+              title="Stones & Amber"
+              description="Natural stones & gemstones"
               href="/stones"
               count={stonesCount}
               gradient="bg-gradient-to-br from-amber-600 to-amber-900"
@@ -113,8 +124,8 @@ export default async function HomePage() {
               }
             />
             <CategoryCard
-              title="Klockor"
-              description="Vintage & antika klockor"
+              title="Watches"
+              description="Vintage & antique watches"
               href="/watches"
               count={watchesCount}
               gradient="bg-gradient-to-br from-stone-600 to-stone-900"
@@ -128,21 +139,57 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* ── Expertise ─────────────────────────────────────────────────────── */}
+      <section className="py-20 px-4 bg-gradient-to-br from-amber-50 to-stone-50">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-amber-100 mb-6">
+            <svg className="w-8 h-8 text-amber-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+            </svg>
+          </div>
+          <h2 className="font-display text-3xl md:text-4xl font-bold text-stone-800 mb-4">
+            40+ Years of Expertise
+          </h2>
+          <p className="text-stone-600 text-lg mb-6 leading-relaxed">
+            Samir brings over four decades of professional experience in vintage watches and natural amber stones. 
+            With deep knowledge of Baltic amber and antique timepieces from renowned makers like Rolex, Longines, Omega, and Seiko.
+          </p>
+          <div className="bg-white rounded-2xl p-8 shadow-lg border border-stone-200">
+            <p className="text-stone-700 font-medium mb-4">
+              Interested in buying or selling watches and amber stones?
+            </p>
+            <p className="text-stone-600 mb-6">
+              We're always open to proposals. Whether you're looking to acquire a specific piece or sell from your collection, 
+              reach out to discuss opportunities.
+            </p>
+            <a
+              href="mailto:samirwatches80@gmail.com"
+              className="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-400 text-stone-900 font-semibold px-6 py-3 rounded-xl transition-colors"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              Contact Samir
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* ── Featured products ─────────────────────────────────────────────── */}
       <section className="py-20 px-4 bg-stone-100/60">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-end justify-between mb-10">
             <div>
               <h2 className="font-display text-3xl md:text-4xl font-bold text-stone-800 mb-1">
-                Tillgängliga objekt
+                Available items
               </h2>
-              <p className="text-stone-500">Redo att köpas på Tradera</p>
+              <p className="text-stone-500">Ready to buy on Tradera</p>
             </div>
             <Link
               href="/available"
               className="text-amber-700 hover:text-amber-600 font-semibold text-sm transition-colors flex items-center gap-1"
             >
-              Se alla
+              View all
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>

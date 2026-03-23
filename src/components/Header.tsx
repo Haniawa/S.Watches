@@ -5,11 +5,11 @@ import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
 const navLinks = [
-  { href: '/', label: 'Hem' },
-  { href: '/available', label: 'Tillgängligt' },
-  { href: '/sold', label: 'Sålda' },
-  { href: '/stones', label: 'Stenar & Bärnsten' },
-  { href: '/watches', label: 'Klockor' },
+  { href: '/', label: 'Home' },
+  { href: '/available', label: 'Available' },
+  { href: '/sold', label: 'Sold' },
+  { href: '/stones', label: 'Stones & Amber' },
+  { href: '/watches', label: 'Watches' },
 ];
 
 export function Header() {
@@ -49,7 +49,7 @@ export function Header() {
           <button
             className="md:hidden text-stone-300 hover:text-white p-2 rounded-lg hover:bg-stone-800 transition-colors"
             onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Öppna meny"
+            aria-label="Open menu"
           >
             {menuOpen ? (
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -19,7 +19,7 @@ export function StatusBadge({ status, className = '' }: StatusBadgeProps) {
           status === 'available' ? 'bg-emerald-500' : 'bg-red-500'
         }`}
       />
-      {status === 'available' ? 'Tillgänglig' : 'Såld'}
+      {status === 'available' ? 'Available' : 'Sold'}
     </span>
   );
 }

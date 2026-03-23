@@ -1,7 +1,7 @@
 import { ProductCondition, ProductCategory } from './types';
 
 export function formatPrice(price: number): string {
-  return new Intl.NumberFormat('sv-SE', {
+  return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'SEK',
     maximumFractionDigits: 0,
@@ -10,20 +10,20 @@ export function formatPrice(price: number): string {
 
 export function conditionLabel(condition: ProductCondition): string {
   const labels: Record<ProductCondition, string> = {
-    'new': 'Ny',
-    'like-new': 'Som ny',
-    'good': 'Mycket bra skick',
-    'fair': 'Bra skick',
+    'new': 'New',
+    'like-new': 'Like new',
+    'good': 'Very good condition',
+    'fair': 'Good condition',
   };
   return labels[condition];
 }
 
 export function categoryLabel(category: ProductCategory): string {
   const labels: Record<ProductCategory, string> = {
-    'stones': 'Stenar & Bärnsten',
-    'watches': 'Klockor',
-    'jewelry': 'Smycken',
-    'other': 'Övrigt',
+    'stones': 'Stones & Amber',
+    'watches': 'Watches',
+    'jewelry': 'Jewelry',
+    'other': 'Other',
   };
   return labels[category];
 }

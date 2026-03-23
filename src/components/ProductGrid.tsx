@@ -8,7 +8,7 @@ interface ProductGridProps {
 
 export function ProductGrid({
   products,
-  emptyMessage = 'Inga produkter hittades.',
+  emptyMessage = 'No products found.',
 }: ProductGridProps) {
   if (products.length === 0) {
     return (

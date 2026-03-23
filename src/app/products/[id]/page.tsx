@@ -20,7 +20,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { id } = await params;
   const product = await getProductById(id);
-  if (!product) return { title: 'Produkt hittades inte — Swatches' };
+  if (!product) return { title: 'Product not found — Swatches' };
   return {
     title: `${product.title} — Swatches`,
     description: product.description.slice(0, 160),
@@ -46,7 +46,7 @@ export default async function ProductPage({
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
         </svg>
-        Tillbaka
+        Back
       </Link>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16">
@@ -78,7 +78,7 @@ export default async function ProductPage({
             >
               <Image
                 src={img}
-                alt={`${product.title} bild ${i + 2}`}
+                alt={`${product.title} image ${i + 2}`}
                 fill
                 unoptimized
                 className="object-cover"
