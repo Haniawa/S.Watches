@@ -16,44 +16,46 @@ export default async function HomePage() {
   return (
     <div>
       {/* ── Hero ──────────────────────────────────────────────────────────── */}
-      <section className="relative bg-gradient-to-br from-stone-900 via-stone-800 to-amber-950 text-white overflow-hidden">
+      <section className="relative bg-gradient-to-br from-stone-900 via-stone-800 to-amber-950 text-white overflow-hidden min-h-[600px]">
         {/* Background Image */}
         <div 
-          className="absolute inset-0 opacity-20 bg-cover bg-center bg-no-repeat"
+          className="absolute inset-0 opacity-60 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: "url('https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=2080&auto=format&fit=crop')",
+            backgroundImage: "url('/enicar.png')",
           }}
         />
-        {/* Overlay gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-stone-900/90 via-stone-800/85 to-amber-950/90" />
+        {/* Overlay gradient - lighter on the left for text */}
+        <div className="absolute inset-0 bg-gradient-to-r from-stone-900/95 via-stone-900/70 to-transparent" />
         
         {/* Content */}
-        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 py-24 text-center">
-          <p className="text-amber-400 text-sm font-semibold uppercase tracking-[0.2em] mb-5">
-            Hand-picked antiques
-          </p>
-          <h1 className="font-display text-5xl md:text-6xl font-bold leading-tight mb-6">
-            Timeless treasures
-            <br />
-            <span className="text-amber-400">from Tradera</span>
-          </h1>
-          <p className="text-stone-300 text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
-            Unique stones, amber, antique watches and collectibles. Each item is
-            carefully selected for its history and beauty.
-          </p>
-          <div className="flex flex-wrap gap-4 justify-center">
-            <Link
-              href="/available"
-              className="bg-amber-500 hover:bg-amber-400 text-stone-900 font-semibold px-8 py-3.5 rounded-xl transition-colors shadow-lg"
-            >
-              Browse available items
-            </Link>
-            <Link
-              href="/stones"
-              className="border border-stone-500 hover:border-amber-400 hover:text-amber-400 text-stone-300 font-semibold px-8 py-3.5 rounded-xl transition-colors"
-            >
-              Explore amber
-            </Link>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 flex items-center min-h-[600px]">
+          <div className="max-w-xl">
+            <p className="text-amber-400 text-sm font-semibold uppercase tracking-[0.2em] mb-5">
+              Hand-picked antiques
+            </p>
+            <h1 className="font-display text-5xl md:text-7xl font-bold leading-tight mb-6">
+              Timeless treasures
+              <br />
+              <span className="text-amber-400">from Tradera</span>
+            </h1>
+            <p className="text-stone-200 text-lg mb-10 leading-relaxed">
+              Unique stones, amber, antique watches and collectibles. Each item is
+              carefully selected for its history and beauty.
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <Link
+                href="/available"
+                className="bg-amber-500 hover:bg-amber-400 text-stone-900 font-semibold px-8 py-3.5 rounded-xl transition-colors shadow-lg"
+              >
+                Browse available items
+              </Link>
+              <Link
+                href="/stones"
+                className="border-2 border-amber-400 hover:bg-amber-400 hover:text-stone-900 text-amber-400 font-semibold px-8 py-3.5 rounded-xl transition-colors"
+              >
+                Explore amber
+              </Link>
+            </div>
           </div>
         </div>
       </section>
