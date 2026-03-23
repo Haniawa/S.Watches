@@ -23,6 +23,7 @@ export function categoryLabel(category: ProductCategory): string {
     'stones': 'Stones & Amber',
     'watches': 'Watches',
     'jewelry': 'Jewelry',
+    'parts': 'Parts',
     'other': 'Other',
   };
   return labels[category];

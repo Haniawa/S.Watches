@@ -1,4 +1,4 @@
-export type ProductCategory = 'stones' | 'watches' | 'jewelry' | 'other';
+export type ProductCategory = 'stones' | 'watches' | 'jewelry' | 'parts' | 'other';
 export type ProductStatus = 'available' | 'sold';
 export type ProductCondition = 'new' | 'like-new' | 'good' | 'fair';
 
