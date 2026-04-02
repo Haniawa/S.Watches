@@ -15,20 +15,21 @@ export default async function PartsPage() {
 
   return (
     <div>
-      <div className="relative bg-gradient-to-r from-blue-700 to-blue-950 text-white py-16 px-4 overflow-hidden">
-        {/* Background Image */}
-        <div 
-          className="absolute inset-0 opacity-15 bg-cover bg-center bg-no-repeat"
+      <div className="relative bg-blue-950 text-white overflow-hidden min-h-[480px] flex items-center">
+        {/* Wallpaper */}
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: "url('https://images.unsplash.com/photo-1524805444758-089113d48a6d?q=80&w=2088&auto=format&fit=crop')",
+            backgroundImage: "url('/parts.png')",
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-700/90 to-blue-950/90" />
-        <div className="relative max-w-7xl mx-auto">
-          <p className="text-blue-300 text-sm uppercase tracking-widest mb-2">Category</p>
-          <h1 className="font-display text-4xl md:text-5xl font-bold mb-2">Parts</h1>
-          <p className="text-blue-300 text-lg">
-            {partsProducts.length} items total · {available.length} available
+        {/* Left-heavy overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-950 via-blue-950/80 to-blue-800/25" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-24 w-full">
+          <p className="text-blue-300 text-xs font-semibold uppercase tracking-[0.2em] mb-4">Category</p>
+          <h1 className="font-display text-5xl md:text-7xl font-bold mb-4">Parts</h1>
+          <p className="text-blue-200 text-xl max-w-lg">
+            {partsProducts.length} items total &middot; {available.length} available
           </p>
         </div>
       </div>

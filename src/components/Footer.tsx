@@ -5,6 +5,7 @@ const footerLinks = [
   { href: '/sold', label: 'Sold items' },
   { href: '/stones', label: 'Stones & Amber' },
   { href: '/watches', label: 'Watches' },
+  { href: '/parts', label: 'Parts' },
 ];
 
 export function Footer() {

@@ -15,20 +15,21 @@ export default async function WatchesPage() {
 
   return (
     <div>
-      <div className="relative bg-gradient-to-r from-stone-700 to-stone-950 text-white py-16 px-4 overflow-hidden">
-        {/* Background Image */}
-        <div 
-          className="absolute inset-0 opacity-15 bg-cover bg-center bg-no-repeat"
+      <div className="relative bg-stone-950 text-white overflow-hidden min-h-[480px] flex items-center">
+        {/* Wallpaper */}
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: "url('https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=2080&auto=format&fit=crop')",
+            backgroundImage: "url('/omega.png')",
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-stone-700/90 to-stone-950/90" />
-        <div className="relative max-w-7xl mx-auto">
-          <p className="text-stone-300 text-sm uppercase tracking-widest mb-2">Category</p>
-          <h1 className="font-display text-4xl md:text-5xl font-bold mb-2">Watches</h1>
-          <p className="text-stone-300 text-lg">
-            {watchProducts.length} items total · {available.length} available
+        {/* Left-heavy overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-stone-950 via-stone-950/80 to-stone-800/25" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-24 w-full">
+          <p className="text-stone-300 text-xs font-semibold uppercase tracking-[0.2em] mb-4">Category</p>
+          <h1 className="font-display text-5xl md:text-7xl font-bold mb-4">Watches</h1>
+          <p className="text-stone-300 text-xl max-w-lg">
+            {watchProducts.length} items total &middot; {available.length} available
           </p>
         </div>
       </div>

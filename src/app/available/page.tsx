@@ -13,21 +13,22 @@ export default async function AvailablePage() {
 
   return (
     <div>
-      <div className="relative bg-gradient-to-r from-emerald-800 to-emerald-950 text-white py-16 px-4 overflow-hidden">
-        {/* Background Image */}
-        <div 
-          className="absolute inset-0 opacity-10 bg-cover bg-center bg-no-repeat"
+      <div className="relative bg-emerald-950 text-white overflow-hidden min-h-[480px] flex items-center">
+        {/* Wallpaper */}
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: "url('https://images.unsplash.com/photo-1509048191080-d2984bad6ae5?q=80&w=2064&auto=format&fit=crop')",
+            backgroundImage: "url('/available.png')",
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-emerald-800/90 to-emerald-950/90" />
-        <div className="relative max-w-7xl mx-auto">
-          <p className="text-emerald-300 text-sm uppercase tracking-widest mb-2">Category</p>
-          <h1 className="font-display text-4xl md:text-5xl font-bold mb-2">
+        {/* Left-heavy overlay so text stays readable */}
+        <div className="absolute inset-0 bg-gradient-to-r from-emerald-950 via-emerald-950/80 to-emerald-900/25" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-24 w-full">
+          <p className="text-emerald-300 text-xs font-semibold uppercase tracking-[0.2em] mb-4">Category</p>
+          <h1 className="font-display text-5xl md:text-7xl font-bold mb-4">
             Available Items
           </h1>
-          <p className="text-emerald-200 text-lg">
+          <p className="text-emerald-200 text-xl max-w-lg">
             {available.length} items ready to buy on Tradera
           </p>
         </div>

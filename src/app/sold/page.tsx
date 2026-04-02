@@ -13,19 +13,20 @@ export default async function SoldPage() {
 
   return (
     <div>
-      <div className="relative bg-gradient-to-r from-slate-700 to-slate-900 text-white py-16 px-4 overflow-hidden">
-        {/* Background Image */}
-        <div 
-          className="absolute inset-0 opacity-10 bg-cover bg-center bg-no-repeat"
+      <div className="relative bg-slate-950 text-white overflow-hidden min-h-[480px] flex items-center">
+        {/* Wallpaper */}
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: "url('https://images.unsplash.com/photo-1587836374228-4c8c34898e85?q=80&w=2070&auto=format&fit=crop')",
+            backgroundImage: "url('/soldout.png')",
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-700/90 to-slate-900/90" />
-        <div className="relative max-w-7xl mx-auto">
-          <p className="text-slate-300 text-sm uppercase tracking-widest mb-2">Category</p>
-          <h1 className="font-display text-4xl md:text-5xl font-bold mb-2">Sold Items</h1>
-          <p className="text-slate-300 text-lg">{sold.length} items sold</p>
+        {/* Left-heavy overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/80 to-slate-800/25" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-24 w-full">
+          <p className="text-slate-300 text-xs font-semibold uppercase tracking-[0.2em] mb-4">Category</p>
+          <h1 className="font-display text-5xl md:text-7xl font-bold mb-4">Sold Items</h1>
+          <p className="text-slate-300 text-xl max-w-lg">{sold.length} previously sold items</p>
         </div>
       </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">

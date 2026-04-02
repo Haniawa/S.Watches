@@ -40,8 +40,9 @@ async function soapPost(operation: string, body: string): Promise<string> {
       SOAPAction: `"${NS}/${operation}"`,
     },
     body: soapEnvelope(body),
-    cache: 'force-cache',
+    cache: 'no-cache',
   });
+
   if (!res.ok) {
     throw new Error(`Tradera SOAP ${res.status}: ${(await res.text()).slice(0, 300)}`);
   }
@@ -178,14 +179,14 @@ function parseItems(xml: string): TraderaItem[] {
 
 // ── Search body builder ───────────────────────────────────────────────────────
 
-function searchAdvancedBody(alias: string, itemStatus?: string): string {
+function searchAdvancedBody(alias: string, pageNumber: number, itemStatus?: string): string {
   const statusEl = itemStatus ? `    <tns:ItemStatus>${itemStatus}</tns:ItemStatus>` : '';
   return [
     '<tns:SearchAdvanced>',
     '  <tns:request>',
     '    <tns:SearchWords/>',
     '    <tns:CategoryId>0</tns:CategoryId>',
-    '    <tns:SearchInDescription>false</tns:SearchInDescription>',
+    '    <tns:SearchInDescription>true</tns:SearchInDescription>',
     '    <tns:PriceMinimum i:nil="true"/>',
     '    <tns:PriceMaximum i:nil="true"/>',
     '    <tns:BidsMinimum i:nil="true"/>',
@@ -195,7 +196,7 @@ function searchAdvancedBody(alias: string, itemStatus?: string): string {
     '    <tns:OnlyAuctionsWithBuyNow>false</tns:OnlyAuctionsWithBuyNow>',
     '    <tns:OnlyItemsWithThumbnail>false</tns:OnlyItemsWithThumbnail>',
     '    <tns:ItemsPerPage>100</tns:ItemsPerPage>',
-    '    <tns:PageNumber>1</tns:PageNumber>',
+    `    <tns:PageNumber>${pageNumber}</tns:PageNumber>`,
     statusEl,
     '  </tns:request>',
     '</tns:SearchAdvanced>',
@@ -204,29 +205,53 @@ function searchAdvancedBody(alias: string, itemStatus?: string): string {
 
 // ── Public API ────────────────────────────────────────────────────────────────
 
+/** Parse the total number of items from the search response. */
+function parseTotalCount(xml: string): number {
+  const total = xmlGet(xml, 'TotalNumberOfItems');
+  return parseInt(total, 10) || 0;
+}
+
 /**
- * Fetch all items (active + recently ended) for a seller alias.
+ * Fetch all pages for a given item status.
+ * Paginates until all items are retrieved (100 per page).
+ */
+async function fetchAllPages(alias: string, itemStatus?: string): Promise<TraderaItem[]> {
+  const PAGE_SIZE = 100;
+  const MAX_PAGES = 20; // safety cap
+  const allItems: TraderaItem[] = [];
+
+  const firstXml = await soapPost('SearchAdvanced', searchAdvancedBody(alias, 1, itemStatus));
+  const firstItems = parseItems(firstXml);
+  allItems.push(...firstItems);
+
+  const total = parseTotalCount(firstXml);
+  const totalPages = Math.min(Math.ceil(total / PAGE_SIZE), MAX_PAGES);
+
+  for (let page = 2; page <= totalPages; page++) {
+    const xml = await soapPost('SearchAdvanced', searchAdvancedBody(alias, page, itemStatus));
+    allItems.push(...parseItems(xml));
+  }
+
+  return allItems;
+}
+
+/**
+ * Fetch all items (active + ended/sold) for a seller alias.
  * Results are deduplicated by ID.
  */
 export async function fetchSellerItems(sellerAlias: string): Promise<TraderaItem[]> {
-  // Active/upcoming listings
-  const activeXml = await soapPost('SearchAdvanced', searchAdvancedBody(sellerAlias));
-  const active = parseItems(activeXml);
+  // Fetch active, ended, and unfiltered items in parallel to maximise coverage.
+  // The unfiltered call (no ItemStatus) may return items not in the other two.
+  const [active, ended, all] = await Promise.all([
+    fetchAllPages(sellerAlias, 'Ongoing'),
+    fetchAllPages(sellerAlias, 'Ended'),
+    fetchAllPages(sellerAlias),
+  ]);
 
-  // Ended/sold listings (best-effort)
-  let ended: TraderaItem[] = [];
-  try {
-    const endedXml = await soapPost('SearchAdvanced', searchAdvancedBody(sellerAlias, 'Ended'));
-    ended = parseItems(endedXml);
-  } catch {
-    // Ended listings are optional; suppress the error
+  // Deduplicate by ID (prefer ended version if item just transitioned)
+  const byId = new Map<number, TraderaItem>();
+  for (const item of [...all, ...active, ...ended]) {
+    byId.set(item.id, item);
   }
-
-  // Merge and deduplicate by ID
-  const seen = new Set<number>();
-  return [...active, ...ended].filter((item) => {
-    if (seen.has(item.id)) return false;
-    seen.add(item.id);
-    return true;
-  });
+  return Array.from(byId.values());
 }

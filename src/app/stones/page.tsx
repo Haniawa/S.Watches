@@ -15,22 +15,23 @@ export default async function StonesPage() {
 
   return (
     <div>
-      <div className="relative bg-gradient-to-r from-amber-700 to-amber-950 text-white py-16 px-4 overflow-hidden">
-        {/* Background Image */}
-        <div 
-          className="absolute inset-0 opacity-15 bg-cover bg-center bg-no-repeat"
+      <div className="relative bg-amber-950 text-white overflow-hidden min-h-[480px] flex items-center">
+        {/* Wallpaper */}
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: "url('https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=2070&auto=format&fit=crop')",
+            backgroundImage: "url('/amber.png')",
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-amber-700/90 to-amber-950/90" />
-        <div className="relative max-w-7xl mx-auto">
-          <p className="text-amber-200 text-sm uppercase tracking-widest mb-2">Category</p>
-          <h1 className="font-display text-4xl md:text-5xl font-bold mb-2">
-            Stones & Amber
+        {/* Left-heavy overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-amber-950 via-amber-950/80 to-amber-800/25" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-24 w-full">
+          <p className="text-amber-300 text-xs font-semibold uppercase tracking-[0.2em] mb-4">Category</p>
+          <h1 className="font-display text-5xl md:text-7xl font-bold mb-4">
+            Stones &amp; Amber
           </h1>
-          <p className="text-amber-200 text-lg">
-            {stoneProducts.length} items total · {available.length} available
+          <p className="text-amber-200 text-xl max-w-lg">
+            {stoneProducts.length} items total &middot; {available.length} available
           </p>
         </div>
       </div>

@@ -2,15 +2,21 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Metadata } from 'next';
-import { getProducts, getProductById } from '@/lib/products';
+import { getProducts, getProductById, HIGHLIGHT_ARCHIVE_ITEMS } from '@/lib/products';
 import { formatPrice, conditionLabel, categoryLabel } from '@/lib/utils';
 import { StatusBadge } from '@/components/StatusBadge';
 
-export const dynamicParams = false;
-
 export async function generateStaticParams() {
   const products = await getProducts();
-  return products.map((p) => ({ id: p.id }));
+  const archiveIds = HIGHLIGHT_ARCHIVE_ITEMS.map((p) => ({ id: p.id }));
+  const liveIds = products.map((p) => ({ id: p.id }));
+  // Deduplicate in case an archive item is also live
+  const seen = new Set<string>();
+  return [...liveIds, ...archiveIds].filter((p) => {
+    if (seen.has(p.id)) return false;
+    seen.add(p.id);
+    return true;
+  });
 }
 
 export async function generateMetadata({
@@ -118,21 +124,21 @@ export default async function ProductPage({
             )}
             {product.year && (
               <>
-                <dt className="text-stone-500 font-medium">Tillverkat ca</dt>
-                <dd className="text-stone-800">{product.year}-tal</dd>
+                <dt className="text-stone-500 font-medium">Year</dt>
+                <dd className="text-stone-800">{product.year}</dd>
               </>
             )}
             {product.condition && (
               <>
-                <dt className="text-stone-500 font-medium">Skick</dt>
+                <dt className="text-stone-500 font-medium">Condition</dt>
                 <dd className="text-stone-800">{conditionLabel(product.condition)}</dd>
               </>
             )}
             {product.soldDate && (
               <>
-                <dt className="text-stone-500 font-medium">Såldes</dt>
+                <dt className="text-stone-500 font-medium">Sold on</dt>
                 <dd className="text-stone-800">
-                  {new Date(product.soldDate).toLocaleDateString('sv-SE')}
+                  {new Date(product.soldDate).toLocaleDateString('en-US')}
                 </dd>
               </>
             )}
@@ -153,7 +159,7 @@ export default async function ProductPage({
           )}
 
           {/* CTA */}
-          {product.status === 'available' ? (
+          {product.status === 'available' && (
             <a
               href={product.traderaUrl ?? 'https://www.tradera.com'}
               target="_blank"
@@ -163,14 +169,20 @@ export default async function ProductPage({
               <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
               </svg>
-              Köp på Tradera
+              Buy on Tradera
               <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
               </svg>
             </a>
-          ) : (
-            <div className="w-full text-center bg-stone-100 text-stone-400 font-medium py-4 px-6 rounded-xl">
-              Detta objekt är sålt
+          )}
+          {product.status === 'sold' && (
+            <div className="w-full text-center bg-gradient-to-r from-stone-100 to-amber-50 text-stone-500 font-medium py-4 px-6 rounded-xl border border-stone-200">
+              <span className="flex items-center justify-center gap-2">
+                <svg className="w-5 h-5 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+                This item has been sold
+              </span>
             </div>
           )}
         </div>
